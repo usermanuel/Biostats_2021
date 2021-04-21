@@ -1,3 +1,4 @@
+
 # Script name: Exercise 6.7
 # Purpose: exercise 6.7
 # Author: Robyn Manuel
@@ -7,23 +8,23 @@
 # 6.7.1 -------------------------------------------------------------------
 
 library(tidyverse)
-install.packages("plotly")
+#install.packages("plotly")
 library(ggplot2)
 library(plotly)
-install.packages(rmisc)
+#install.packages(rmisc)
 
 snakes <- read.csv("data/snakes.csv")
 snakes$day = as.factor(snakes$day)
 
 
 snakes.summary <- snakes %>% 
-  group_by(day, snake) %>% 
+  group_by(day, snake) %>%  # group_by when use "per"
   summarise(mean_openings = mean(openings),
             sd_openings = sd(openings)) %>% 
   ungroup()
 snakes.summary
 
-install.packages("Rmisc")
+#install.packages("Rmisc")
 
 library(Rmisc)
 snakes.summary2 <- summarySE(data = snakes, measurevar = "openings", groupvars = c("day"))
@@ -49,18 +50,23 @@ plot(fitted(snakes.aov), residuals(snakes.aov), col = "red")
 snakes.tukey <- TukeyHSD(snakes.aov, which = "day", conf.level = 0.90)
 plot(snakes.tukey, las = 1, col = "red")
 
+library("ggplot2")
+# doesnt correcly illistrate the data
+#ggplot(data = snakes, mapping = aes(x =openings, y = snake))+
+ # geom_jitter(aes(col = snake))+
+#  geom_smooth(method = "lm")
+#  labs(title = "Snakes habituation to the stimuli",
+ #      x = "Openings",
+#       y = "Snakes") +
+ # theme_bw() +
+  #theme(axis.text.x = element_text(colour = "grey20", size = 12, angle = 90,
+   #                                hjust = 0.5, vjust = 0.5),
+    #    axis.text.y = element_text(colour = "grey20", size = 12),
+    #    text = element_text(size = 16))
 
-ggplot(data = snakes, mapping = aes(x =openings, y = snake))+
-  geom_jitter(aes(col = snake))+
+ggplot(data = snakes, aes(x = snake, y = openings)) +
+  geom_bar(stat="identity", fill="steelblue") +
   labs(title = "Snakes habituation to the stimuli",
-       x = "Openings",
-       y = "Snakes") +
-  theme_bw() +
-  theme(axis.text.x = element_text(colour = "grey20", size = 12, angle = 90,
-                                   hjust = 0.5, vjust = 0.5),
-        axis.text.y = element_text(colour = "grey20", size = 12),
-        text = element_text(size = 16))
-
-
-
+             x = "Openings",
+              y = "Snakes") 
 
