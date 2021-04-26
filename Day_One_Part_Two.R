@@ -4,7 +4,19 @@
 # Author: Robyn Manuel
 
 # sample need to be full representation of diversity, hence random.
-
+library(tidyverse)
+library(lubridate)
+library(ggplot2)
+library(dplyr)
+library(ggrepel)
+library(readr)
+library(ggpubr)
+library(dslabs)
+library(reshape) #heatmap
+library(plotly)
+library(plyr)
+library(tidyr)
+library(rcompanion)
 library(tidyverse)
 chicks <- as_tibble(ChickWeight)
 
@@ -68,9 +80,24 @@ chicks %>%
             chick_med = median(weight))
 # can also do formal calculation.
 
+# ---------- --------------------------------------------------------------
+ graph1 <- chicks %>% 
+  group_by(Chick) %>% 
+  summarise(chick_m = mean(weight))
+library(ggplot2)
+
+gr1<- ggplot(data = graph1) + 
+  geom_bar(stat = "identity", mapping = aes(x = Chick, y = chick_m)) +
+  scale_fill_brewer(palette = "BuGn") +
+  labs(title = "Mean weight of chicks")
+  
+
+# -------- ----------------------------------------------------------------
+
+
 # Kurtosis ----------------------------------------------------------------
 # load the package
-install.packages("e1071")
+#install.packages("e1071")
 library("e1071")
 
 kurtosis(chicks$weight)
@@ -84,14 +111,13 @@ chicks %>%
             mean_wt = sum(weight) / n())
 #diet specific
 
-chicks %>% 
+graph2 <- chicks %>% 
   group_by(Diet) %>% 
   filter(Time == 20) %>% 
   summarise(chicks = mean(weight),
             chicks_st = sd(weight),
             chick_med = median(weight),
             mean_wt = sum(weight) / n())
-
 
 # Testing quantiles -------------------------------------------------------
 chicks %>% 
@@ -140,6 +166,5 @@ mean(dat1, na.rm = TRUE)
 
 
 
-
-
+# ----- -------------------------------------------------------------------
 

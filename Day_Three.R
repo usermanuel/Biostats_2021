@@ -36,9 +36,31 @@ ggplot(data = faithful, aes(x = waiting, y = eruptions)) +
 #eg
 library(ggplot2)
 ggplot(data = ToothGrowth, aes(x = dose, y = len)) +
-  geom_point() +
+  geom_point() 
+faith <- faithful
+ggplot(data = faithful, aes(x = index, y = waiting )) +
+  geom_col(size = 1, color ="darkblue", fill = "white")
   
+library(boot)
+head(breslow)
 
+bv <- as_tibble(breslow)
+ggplot(data = bv, aes( x = age, y = n)) + 
+  geom_col(size = 1, color = "darkblue", fill = "white")
+
+ggplot(bv, aes(x  = age, y = y)) +
+  geom_line(size = 1.5, color = "red", group = 1)
+
+
+ggplot(data = bv, aes( x = age, y = n, col = age)) + 
+  geom_col(size = 1, color = "seagreen2", fill = 
+             c("dodgerblue4", "deepskyblue", 
+               "cyan4", "aquamarine3", "cadetblue",
+               "cornflowerblue","darkslategray","darkslateblue",
+               "lightblue3","mediumturquoise")) +
+  geom_line(size = 1, color = "violetred3", group = 1) +
+  scale_y_continuous(sec.axis = sec_axis(~./3 name ="series2"))
+  
 
 # Section9 ----------------------------------------------------------------
 
@@ -101,8 +123,8 @@ r_print <- paste0("r = ",
 
 # Then create a single panel showing one correlation
 ggplot(data = ecklonia, aes(x = stipe_length, y = frond_length)) +
-  geom_smooth(method = "lm", colour = "grey90", se = F) +
-  geom_point(colour = "mediumorchid4") +
+  geom_smooth(method = "lm", colour = "palevioletred4", se = F, alpha = 0.8) +
+  geom_point(colour = "orangered4") +
   geom_label(x = 300, y = 240, label = r_print) +
   labs(x = "Stipe length (cm)", y = "Frond length (cm)") +
   theme_pubclean()

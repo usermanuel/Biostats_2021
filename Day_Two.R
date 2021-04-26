@@ -1,3 +1,4 @@
+
 #Script name: Day Two
 # Purpose: Chapter 6
 # Author: Robyn Manuel
@@ -7,7 +8,7 @@
 # Chapter 6 ---------------------------------------------------------------
 
 
-
+library(ggplot2)
 library(tidyverse)
 #install.packages("plotly")
 #shipiro calculate normal for all, need to calculate for a an b
