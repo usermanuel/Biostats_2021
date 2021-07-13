@@ -1,7 +1,7 @@
 # Title: Quantitative Ecology
 # Author: Robyn Manuel
 # Purpose: Principal Component Analysis (PCA)
-# Date: 12/06/2021
+# Date: 13/06/2021
 
 
 
@@ -113,16 +113,56 @@ round(envT_pca$CA$eig[1]/ sum(envT_pca$CA$eig) * 100, 1)
 
 # Graphical Representation
 
-biplot(envT_pca, scaling = 1, main = "PCA scaling 1", choices = c(1, 2))
-biplot(envT_pca, scaling = 2, main = "PCA scaling 2", choices = c(1, 2))
+biplot(envT_pca, scaling = 1, choices = c(1, 2), main = "PCA scaling 1")
+biplot(envT_pca, scaling = 2, choices = c(1, 2), main = "PCA scaling 2")
 
+
+source("https://raw.githubusercontent.com/ajsmit/Quantitative_Ecology/main/Num_Ecol_R_book_ed1/cleanplot.pca.R")
 cleanplot.pca(envT_pca, scaling = 1)
 cleanplot.pca(envT_pca, scaling = 2)
+
 
 
 biplot(envT_pca, type = c("text", "points"), col = c("black", "black"))
 ordisurf(envT_pca ~ bod, env, add = TRUE, col = "turquoise", knots = 1)
 ordisurf(envT_pca ~ alt, env, add = TRUE, col = "salmon", knots = 1)
+
+
+
+
+
+# 2. Discuss the patterns observed for A:
+
+# 2.a.explain the ordination diagram with particular reference to the major patterns shown:
+
+# The sites are scattered along the Cartesian plane in anti-clockwise direction.
+# Sites one to sixteen occur in the fourth quadrant, within this quadrant 
+# aspect, secondary tree cover, tree density, tree species density and herb cover are the 
+# largest environmental influences. Sites 17 to 31 occur within the third quadrant; total 
+# foliage volume, canopy height, canopy cover, foliage height diversity index, Tree basal 
+# area and tree species diversity. Sites 32 to 45 fall within the second quadrant, mean 
+# tree DBH, slope, elevation, conifer percentage and exposure. only four sites (46 to 50) 
+# occur within the first quadrant where ground cover and shrub cover contribute towards the characteristics of these sites.
+# Foliage height diversity index, mean tree DBH, standard deviation of tree DBH, elevation and 
+# tree basal area have a the largest influence on all the dimensions.  
+
+
+# 2.b.provide a mechanistic explanation for the existence of the patterns seen with respect to elevation/altitude.
+
+# As site number increases the elevation increases. Sites 33 to 50 occur higher than those at lower numbers 
+# which is why they occur with the positive elevation vector. Variables being strong drivers within the lower
+# variables such as tree density, tree species density and herb cover can be expected as at lower heights there 
+# is less exposure to hashes weather elements which would influence vegetation and tree grow. 
+# The highest points occurring at sites from 46 to 50 show high influences from high shrub cover 
+# and ground cover, which would be more sustainable in these weather conditions.
+
+# 2.c. If there are significant positive or negative correlations between the 
+# environmental variables, provide mechanistic reasons for how they came about.
+
+# Tree basal area and standard deviation of tree have a negative correlation to shrub coverage. In areas which are more 
+# conducive to tree growth, trees would cover most of the area blocking sun from many smaller vegetation such as shrubs.
+# This is why shrubs populations would be higher in area where trees are less prevalent. Similarly elevation and conifer 
+# percentage have a positive correlation as conifers can better survive in these elevated environments compared to that of trees
 
 
 
@@ -136,7 +176,7 @@ library("readxl")
 
 data2 <- as_tibble(read_excel("data/aravo.xlsx")) %>% 
   select(-`...1`, -`ZoogD`) # remove the descriptive variables
-view(data2)
+
 
 # Create PCA:
 
@@ -166,46 +206,59 @@ biplot(envA_pca, type = c("text", "points"), col = c("black", "black"))
 ordisurf(envA_pca ~ bod, env, add = TRUE, col = "turquoise", knots = 1)
 ordisurf(envA_pca ~ alt, env, add = TRUE, col = "salmon", knots = 1)
 
+# 2. Discuss the patterns observed for A:
 
-# 2. Discuss the patterns observed:
-
-# explain the ordination diagram with particular reference to the major patterns shown;
-# provide a mechanistic explanation for the existence of the patterns seen with respect
-# to elevation/altitude; and if there are significant positive or negative correlations 
-# between the environmental variables, provide mechanistic reasons for how they came about.
-
-# A. explain the ordination diagram with particular reference to the major patterns shown:
-
-# Within the communities the major contributing variables where slope, snow, form, 
-# aspect (north or south facing), and physical disturbances.Site falling within the 
-# 4th quadrant (counting clockwise), have a string correlation with slope angle.
-# Larger site number occur mostly near the base of the plane, indicating that physical disturbances
-# and mean snow melt date are strong environmental determinants in these areas.
+# 2.a.explain the ordination diagram with particular reference to the major patterns shown:
+# There is no obvious patterns with regards to the sites location. Slope, microtopographic landform index
+# and physical disturbances play large parts in all dimensions.Aspect apears to have very small influence over environments.
+# Sites 45, 41, 40, 53, 44 show a very strong relationship to form, indicating the sites may occur along
+# concave grounds. The lack of site occurrence patterns shows that site
+# occur on very different terrain. 
+# Many of the sites with larger number occur within or near the second quadrant.
 
 
+# 2.b.provide a mechanistic explanation for the existence of the patterns seen with respect to elevation/altitude.
+# Sites with larger numbers occur on low laying areas, where snowmelt will start.
 
-# B.provide a mechanistic explanation for the existence of the patterns seen with
-# respect to elevation/altitude.
-
-# Snow melt, slope and aspect are among the most influential variables here, all of which show a 
-# strong relationship with regard to elevation. South facing slopes will melt first due to
-# the affects of the sun, in this regard vegetation will in these sites will be exposed to sun first
-# encouraging the growth of vegetation requiring lots of sun. North facing slopes will experience less
-# sun exposure and taking longer melt. This vegetation will take longer to grow back and be also be
-# prefer less sun than those on south facing slopes. 
-
-# C. if there are significant positive or negative correlations between the 
+# 2.c. If there are significant positive or negative correlations between the 
 # environmental variables, provide mechanistic reasons for how they came about.
+# Aspect has a strong positive correlation with slope, and both show a negative 
+# correlation with snowmelt. South facing slopes in the Northern hemisphere 
+# are exposed to more sun than those facing north, as such slopes facing southward will
+# will experience sun exposure melting the snow at the lower points first and therefore
+# sites occurring at those points will experience snow melt first. Areas at higher sites will melt at a later date.
+# Form has a negative correlation to physical disturbances. Convex grounds will have 
+# slightly more expose to weather elements such as sun, allowing for more conducive 
+# environments for vegetation growth. Concave ground make a ideal area for snow to collect
+# and make the environment less suitable for vegetation growth.
 
 
-# South facing experiences more sun and is therefore warmer, slope and aspect are
-# linked which is why they have a close association. Snow patterns would show a 
-# opposite effect of these two variables given that snow will occur on higher,
-# north face (colder aspects).
-# Physical processes which influence topography will determine the physical disturbances, 
-# which is why physical disturbances and Form show a opposite correlating relationship.
-# The large the disturbance the less likely formation of vegetation as the soil is not
-# in the "correct" state.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
